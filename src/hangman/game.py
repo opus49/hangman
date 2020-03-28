@@ -1,6 +1,7 @@
 """Module for Game class"""
 
-from hangman import Dictionary, Screen
+from hangman import Dictionary
+from hangman.cli.screen import Screen
 
 
 class Game:
