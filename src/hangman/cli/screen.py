@@ -1,11 +1,13 @@
+"""Module for dealing with the screen for Hangman game"""
+
 import os
 
 
 _GALLOWS = [
-    """
+    r"""
     =============
     ||/     |
-    || 
+    ||
     ||
     ||
     ||
@@ -13,29 +15,29 @@ _GALLOWS = [
     ||
     ||
     """,
-    """
-    =============
-    ||/     |
-    ||     ( )
-    ||
-    ||
-    ||
-    ||
-    ||
-    ||
-    """,
-    """
+    r"""
     =============
     ||/     |
     ||     ( )
-    ||      |
-    ||      |
-    ||      |
-    || 
+    ||
+    ||
+    ||
+    ||
     ||
     ||
     """,
-    """
+    r"""
+    =============
+    ||/     |
+    ||     ( )
+    ||      |
+    ||      |
+    ||      |
+    ||
+    ||
+    ||
+    """,
+    r"""
     =============
     ||/     |
     ||     ( )
@@ -46,34 +48,34 @@ _GALLOWS = [
     ||
     ||
     """,
-    """
+    r"""
     =============
     ||/     |
     ||     ( )
     ||     _|_
-    ||    / | \\
+    ||    / | \
     ||      |
     ||
     ||
     ||
     """,
-    """
+    r"""
     =============
     ||/     |
     ||     ( )
     ||     _|_
-    ||    / | \\
+    ||    / | \
     ||      |
     ||    _/
     ||
     ||
     """,
-    """
+    r"""
     =============
     ||/     |
     ||     ( )
     ||     _|_
-    ||    / | \\
+    ||    / | \
     ||      |
     ||    _/ \_
     ||
@@ -83,8 +85,10 @@ _GALLOWS = [
 
 
 class Screen:
+    """Interface to screen"""
     @staticmethod
     def clear():
+        """Clear the screen"""
         if os.name == "nt":
             os.system("cls")
         else:
@@ -92,6 +96,7 @@ class Screen:
 
     @staticmethod
     def gallows(guesses):
+        """Show the gallows based on the number of incorrect guesses"""
         try:
             print(_GALLOWS[guesses])
         except IndexError:

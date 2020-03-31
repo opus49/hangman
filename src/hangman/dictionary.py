@@ -17,7 +17,7 @@ class Dictionary:
         """Get a new word"""
         if len(self._words) < 1:
             raise ValueError("You have exhausted the list of words!")
-        index = randint(0, len(_WORDS) - 1)
+        index = randint(0, len(self._words) - 1)
         return self._words.pop(index)
 
 
