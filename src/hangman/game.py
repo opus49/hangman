@@ -1,7 +1,11 @@
 """Module for Game class"""
 
+import time
+
 from hangman import Dictionary
 from hangman.cli.screen import Screen
+from hangman.word import Word
+from hangman.error import GuessError
 
 
 class Game:
@@ -19,40 +23,29 @@ class Game:
 
     def game(self):
         """Play a single game of hangman"""
-
-        # track the number of incorrect guesses
-        guesses = 0
-
-        # track the incorrect letters
-        incorrect_letters = []
-
-        # track the correct letters
-        correct_letters = []
-
-        # pick a word from the dictionary
-        word = self._dictionary.get()
-
-        # loop until the game is over
-        result = None
-        while result is not None:
-            # show the gallows and incorrect guessses
+        word = Word(self._dictionary.get())
+        while True:
             Screen.clear()
-            Screen.gallows(len(incorrect_letters))
+            Screen.gallows(len(word.incorrects))
+            word.show()
+            if not word.alive or word.solved:
+                break
+            guess = input("\nWhat is your guess? ")
+            try:
+                word.guess(guess)
+            except GuessError as err:
+                print(err)
+                time.sleep(2)
+        if word.alive:
+            print("\nCongrats, you won!!")
+        else:
+            print(f"\nI'm sorry.  The word was {word.unmasked}.")
 
-            # show the masked word
-
-            # show incorrect guessses
-
-            # ask the player for a guess
-            guess = input("What is your guess? ")
-
-            # handle that guess
-            if guess in word:
-                correct_letters.append(guess)
-            else:
-                incorrect_letters.append(guess)
-
-            if len(incorrect_letters) > 5:
-                result = False
-
-        # display the results
+    @staticmethod
+    def quit():
+        """Quit the game"""
+        print("\n")
+        print("=" * 50)
+        print(" " * 20, "Goodbye!")
+        print("=" * 50)
+        print("\n\n")
