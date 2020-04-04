@@ -2,7 +2,7 @@
 
 import time
 
-from hangman import Dictionary
+from hangman.dictionary import Dictionary
 from hangman.cli.screen import Screen
 from hangman.word import Word
 from hangman.error import GuessError
@@ -27,25 +27,22 @@ class Game:
         while True:
             Screen.clear()
             Screen.gallows(len(word.incorrects))
-            word.show()
+            Screen.put(f"Word      : {word.masked}")
+            Screen.put(f"Incorrects: {' '.join(word.incorrects)}")
             if not word.alive or word.solved:
                 break
-            guess = input("\nWhat is your guess? ")
+            guess = Screen.get("What is your guess?")
             try:
                 word.guess(guess)
             except GuessError as err:
-                print(err)
+                Screen.put(str(err))
                 time.sleep(2)
         if word.alive:
-            print("\nCongrats, you won!!")
+            Screen.put("Congrats, you won!!")
         else:
-            print(f"\nI'm sorry.  The word was {word.unmasked}.")
+            Screen.put(f"I'm sorry.  The word was {word.unmasked}.")
 
     @staticmethod
     def quit():
         """Quit the game"""
-        print("\n")
-        print("=" * 50)
-        print(" " * 20, "Goodbye!")
-        print("=" * 50)
-        print("\n\n")
+        Screen.goodbye()

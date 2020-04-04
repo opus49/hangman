@@ -101,3 +101,22 @@ class Screen:
             print(_GALLOWS[guesses])
         except IndexError:
             print(_GALLOWS[-1])
+
+    @staticmethod
+    def get(question):
+        """Ask the user a question and return the answer"""
+        return input(f"\n{question} ")
+
+    @staticmethod
+    def goodbye():
+        """Say goodbye to the user"""
+        print("\n")
+        print("=" * 50)
+        print(" " * 20, "Goodbye!")
+        print("=" * 50)
+        print("\n\n")
+
+    @staticmethod
+    def put(message):
+        """Print a message to the user"""
+        print(f"\n{message}")
