@@ -1,4 +1,27 @@
-WORDS = [
+"""Hangman dictionary"""
+
+from random import randint
+
+
+class Dictionary:
+    """
+    Interface to word list that supports requesting a word and keeping
+    track of words that have already been used.
+    """
+    def __init__(self, excluded_words=None):
+        if excluded_words is None:
+            excluded_words = []
+        self._words = [x for x in _WORDS if x not in excluded_words]
+
+    def get(self):
+        """Get a new word"""
+        if len(self._words) < 1:
+            raise ValueError("You have exhausted the list of words!")
+        index = randint(0, len(self._words) - 1)
+        return self._words.pop(index)
+
+
+_WORDS = [
     "aardvark",
     "abaci",
     "aback",
